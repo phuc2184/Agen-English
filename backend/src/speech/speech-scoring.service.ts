@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
+import { GamificationService } from '../gamification/gamification.service';
 
 /** Levenshtein distance between two strings */
 function levenshteinDistance(a: string, b: string): number {
@@ -35,7 +36,10 @@ const PASS_THRESHOLD = 85;
 
 @Injectable()
 export class SpeechScoringService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private gamificationService: GamificationService
+  ) {}
 
   scorePronunciation(target: string, userInput: string) {
     const targetNorm = normalize(target);
@@ -74,7 +78,7 @@ export class SpeechScoringService {
   async saveSession(userId: string, target: string, userInput: string) {
     const scores = this.scorePronunciation(target, userInput);
 
-    return this.prisma.speakingSession.create({
+    const session = await this.prisma.speakingSession.create({
       data: {
         userId,
         target_sentence: target,
@@ -83,5 +87,11 @@ export class SpeechScoringService {
         fluency_score: scores.fluencyScore,
       },
     });
+
+    if (scores.passed) {
+      await this.gamificationService.addXp(userId, 20); // Award 20 XP for passing
+    }
+
+    return session;
   }
 }

@@ -23,11 +23,22 @@ model User {
   total_xp      Int      @default(0)
   current_level Int      @default(1)
   lastLogin     DateTime @default(now())
+  badges        Badge[]
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   lessons          Lesson[]
   vocabs           Vocab[]
   speakingSessions SpeakingSession[]
+}
+
+model Badge {
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  icon        String
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  createdAt   DateTime @default(now())
 }
 
 model Lesson {

@@ -41,11 +41,31 @@ async function main() {
     },
   });
 
-  console.log(`✅ Admin user created successfully:`);
-  console.log(`   Username : ${admin.username}`);
-  console.log(`   Email    : ${admin.email}`);
-  console.log(`   Role     : ${admin.role}`);
-  console.log(`   Unlimited: ${admin.is_unlimited}`);
+  console.log(`✅ Admin user created successfully: ${admin.username}`);
+
+  // Dummy users for leaderboard
+  const dummyUsers = [
+    { username: 'alex_learning', xp: 4500, level: 5 },
+    { username: 'maria_eng', xp: 3200, level: 4 },
+    { username: 'john_doe', xp: 1500, level: 2 },
+    { username: 'sarah_smith', xp: 800, level: 1 },
+    { username: 'viet_anh', xp: 5600, level: 6 },
+  ];
+
+  for (const u of dummyUsers) {
+    const hash = await bcrypt.hash('password123', salt);
+    await prisma.user.create({
+      data: {
+        email: `${u.username}@example.com`,
+        username: u.username,
+        password_hash: hash,
+        total_xp: u.xp,
+        current_level: u.level,
+        streak_count: Math.floor(Math.random() * 10),
+      },
+    });
+  }
+  console.log('✅ Dummy users added to leaderboard.');
 }
 
 main()
