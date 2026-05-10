@@ -1,0 +1,40 @@
+.cardContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #0d0d0d;
+  padding: 24px;
+}
+
+.authCard {
+  background-color: #1a1a1a;
+  border-radius: 24px;
+  padding: 32px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  border: 1px solid #2a2a2a;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  color: #e0e0e0;
+  font-size: 24px;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+.bottomAction {
+  margin-top: 32px;
+}
