@@ -77,6 +77,7 @@
   100% { transform: scaleY(1.5); background-color: #4a8b5e; }
 }
 
+/* ── Feedback Area ── */
 .feedbackArea {
   width: 100%;
   display: flex;
@@ -84,16 +85,71 @@
   gap: 16px;
 }
 
-.transcriptBox {
+/* ── Word Highlighting ── */
+.wordHighlight {
   background-color: #121212;
   border-radius: 16px;
   padding: 16px;
-  color: #e0e0e0;
-  font-size: 16px;
-  border: 1px solid transparent;
-  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  line-height: 1.8;
 }
 
+.wordCorrect {
+  color: #a8e6cf;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 2px 6px;
+  border-radius: 8px;
+  position: relative;
+  cursor: default;
+}
+
+.wordWrong {
+  color: #ff8b8b;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 8px;
+  background-color: rgba(74, 44, 44, 0.3);
+  text-decoration: underline wavy #ff6b6b;
+  text-underline-offset: 4px;
+  position: relative;
+  cursor: help;
+}
+
+/* Tooltip on hover for wrong words */
+.wordWrong:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #2a2a2a;
+  color: #ff8b8b;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 10;
+  border: 1px solid #3a3a3a;
+  pointer-events: none;
+}
+
+.wordWrong:hover::before {
+  content: '';
+  position: absolute;
+  bottom: calc(100% + 2px);
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: #2a2a2a;
+  z-index: 10;
+}
+
+/* ── Score Row ── */
 .scoreRow {
   display: flex;
   gap: 16px;
@@ -117,6 +173,36 @@
   color: #ff8b8b;
 }
 
+/* ── Verdict Banner ── */
+.verdictPass {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  border-radius: 16px;
+  font-size: 18px;
+  font-weight: 700;
+  background: linear-gradient(135deg, rgba(168, 230, 207, 0.1), rgba(44, 62, 53, 0.3));
+  border: 1px solid rgba(168, 230, 207, 0.2);
+  color: #a8e6cf;
+}
+
+.verdictFail {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  border-radius: 16px;
+  font-size: 18px;
+  font-weight: 700;
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(74, 44, 44, 0.3));
+  border: 1px solid rgba(255, 107, 107, 0.2);
+  color: #ff8b8b;
+}
+
+/* ── Bottom Section ── */
 .bottomSection {
   margin-top: 32px;
   width: 100%;
@@ -142,8 +228,19 @@
 .recordBtn.recording {
   background-color: #4a2c2c;
   color: #ff8b8b;
+  animation: recordPulse 1.5s infinite ease-in-out;
+}
+
+@keyframes recordPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.3); }
+  50% { box-shadow: 0 0 0 12px rgba(255, 107, 107, 0); }
 }
 
 .recordBtn:hover:not(.recording) {
   background-color: #333333;
+}
+
+.recordBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
