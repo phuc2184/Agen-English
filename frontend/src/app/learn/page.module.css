@@ -1,0 +1,115 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #0d0d0d;
+  padding: 24px;
+  justify-content: center;
+}
+
+.flashcard {
+  background-color: #1a1a1a;
+  border-radius: 24px;
+  padding: 48px 32px;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  border: 1px solid #2a2a2a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  justify-content: center;
+}
+
+.word {
+  color: #e0e0e0;
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.translation {
+  color: #8a8a8a;
+  font-size: 20px;
+  margin-bottom: 48px;
+  text-align: center;
+}
+
+.inputArea {
+  width: 100%;
+  margin-top: 24px;
+}
+
+.answerInput {
+  width: 100%;
+  background-color: #121212;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  padding: 16px;
+  font-size: 16px;
+  color: #e0e0e0;
+  outline: none;
+  box-shadow: none;
+  text-align: center;
+}
+
+.answerInput:focus {
+  background-color: #242424;
+  border-color: #364a40;
+}
+
+.bottomSection {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 32px;
+  width: 100%;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 24px;
+}
+
+.feedbackBtn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 16px;
+  padding: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #e0e0e0;
+}
+
+.btnHard {
+  background-color: #4a2c2c;
+}
+
+.btnHard:hover {
+  background-color: #5c3737;
+}
+
+.btnGood {
+  background-color: #2c3e35;
+}
+
+.btnGood:hover {
+  background-color: #364a40;
+}
+
+.btnEasy {
+  background-color: #2a3b4a;
+}
+
+.btnEasy:hover {
+  background-color: #33485a;
+}
