@@ -1,0 +1,38 @@
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.label {
+  font-size: 14px;
+  color: #a0a0a0;
+  font-weight: 500;
+}
+
+.baseInput {
+  background-color: #1a1a1a;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #e0e0e0;
+  outline: none;
+  transition: all 0.2s ease;
+  box-shadow: none;
+}
+
+.baseInput:focus {
+  background-color: #242424;
+  border-color: #364a40; /* low saturation green */
+}
+
+.errorInput {
+  border-color: #633333;
+}
+
+.errorText {
+  font-size: 12px;
+  color: #ff6b6b;
+}

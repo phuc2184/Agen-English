@@ -1,0 +1,29 @@
+.baseButton {
+  border-radius: 16px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #e0e0e0;
+}
+
+.primary {
+  background-color: #2c3e35; /* Low saturation green for green-tick design system */
+}
+
+.primary:hover {
+  background-color: #364a40;
+}
+
+.secondary {
+  background-color: #2a2a2a;
+}
+
+.secondary:hover {
+  background-color: #333333;
+}
