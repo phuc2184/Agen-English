@@ -14,6 +14,34 @@ model User {
   streak_count  Int      @default(0)
   total_xp      Int      @default(0)
   current_level Int      @default(1)
+  lastLogin     DateTime @default(now())
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  lessons       Lesson[]
+  vocabs        Vocab[]
+}
+
+model Lesson {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  xp_reward   Int      @default(10)
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Vocab {
+  id              String   @id @default(uuid())
+  word            String
+  translation     String
+  sm2_easiness    Float    @default(2.5)
+  sm2_interval    Int      @default(0)
+  sm2_repetitions Int      @default(0)
+  nextReview      DateTime @default(now())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }

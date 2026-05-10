@@ -40,6 +40,26 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
+    const now = new Date();
+    const lastLogin = new Date(user.lastLogin);
+    const diffTime = Math.abs(now.getTime() - lastLogin.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+    
+    let newStreak = user.streak_count;
+    if (diffDays === 1) {
+      newStreak += 1;
+    } else if (diffDays > 1) {
+      newStreak = 1;
+    }
+
+    await this.prisma.user.update({
+      where: { id: user.id },
+      data: {
+        lastLogin: now,
+        streak_count: newStreak
+      }
+    });
+
     return this.generateToken(user.id, user.email);
   }
 
