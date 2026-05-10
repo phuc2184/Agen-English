@@ -10,10 +10,17 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async register(email: string, pass: string) {
+  async register(email: string, pass: string, username?: string) {
     const existingUser = await this.prisma.user.findUnique({ where: { email } });
     if (existingUser) {
       throw new ConflictException('Email already exists');
+    }
+
+    if (username) {
+      const existingUsername = await this.prisma.user.findUnique({ where: { username } });
+      if (existingUsername) {
+        throw new ConflictException('Username already taken');
+      }
     }
 
     const salt = await bcrypt.genSalt();
@@ -22,15 +29,20 @@ export class AuthService {
     const user = await this.prisma.user.create({
       data: {
         email,
+        username: username || null,
         password_hash,
       },
     });
 
-    return this.generateToken(user.id, user.email);
+    return this.generateToken(user);
   }
 
-  async login(email: string, pass: string) {
-    const user = await this.prisma.user.findUnique({ where: { email } });
+  async login(identifier: string, pass: string) {
+    // Try to find user by email first, then by username
+    let user = await this.prisma.user.findUnique({ where: { email: identifier } });
+    if (!user) {
+      user = await this.prisma.user.findUnique({ where: { username: identifier } });
+    }
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
@@ -40,6 +52,7 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
+    // Streak calculation
     const now = new Date();
     const lastLogin = new Date(user.lastLogin);
     const diffTime = Math.abs(now.getTime() - lastLogin.getTime());
@@ -60,13 +73,26 @@ export class AuthService {
       }
     });
 
-    return this.generateToken(user.id, user.email);
+    return this.generateToken(user);
   }
 
-  private generateToken(userId: string, email: string) {
-    const payload = { sub: userId, email };
+  private generateToken(user: { id: string; email: string; username: string | null; role: string; is_unlimited: boolean }) {
+    const payload = {
+      sub: user.id,
+      email: user.email,
+      username: user.username,
+      role: user.role,
+      is_unlimited: user.is_unlimited,
+    };
     return {
       access_token: this.jwtService.sign(payload),
+      user: {
+        id: user.id,
+        email: user.email,
+        username: user.username,
+        role: user.role,
+        is_unlimited: user.is_unlimited,
+      },
     };
   }
 }
