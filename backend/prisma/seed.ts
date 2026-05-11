@@ -10,6 +10,9 @@ async function main() {
   const adminUsername = process.env.ADMIN_USERNAME;
   const adminPassword = process.env.ADMIN_PASSWORD;
 
+  console.log('DEBUG: adminUsername =', adminUsername);
+  console.log('DEBUG: adminPassword =', adminPassword ? '****' : 'UNDEFINED');
+
   if (!adminUsername || !adminPassword) {
     console.error('ERROR: ADMIN_USERNAME and ADMIN_PASSWORD must be set in .env');
     process.exit(1);

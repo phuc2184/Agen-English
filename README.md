@@ -1,4 +1,5 @@
 # Agen-English: AI-Powered Language Learning Platform
+**Last updated: May 2026**
 
 Agen-English is a state-of-the-art language learning system designed with the **Green-Tick Design Standard**. It features Spaced Repetition (SM-2), Speech AI for pronunciation scoring, and a gamified experience with XP and Leaderboards.
 
