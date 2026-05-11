@@ -5,6 +5,8 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { SpeechModule } from './speech/speech.module';
 import { GamificationModule } from './gamification/gamification.module';
+import { LessonModule } from './lesson/lesson.module';
+import { VocabModule } from './vocab/vocab.module';
 
 @Module({
   imports: [
@@ -12,6 +14,8 @@ import { GamificationModule } from './gamification/gamification.module';
     AuthModule,
     SpeechModule,
     GamificationModule,
+    LessonModule,
+    VocabModule,
   ],
   controllers: [AppController],
   providers: [AppService],
