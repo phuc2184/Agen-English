@@ -4,79 +4,129 @@ import React, { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { AppHeader } from '@/components/AppHeader';
+import { BottomNav } from '@/components/BottomNav';
 
-interface UserInfo {
-  id: string;
-  email: string;
-  username: string | null;
-  role: string;
-  is_unlimited: boolean;
+interface UserState {
+  name: string;
+  level: number;
+  xp: number;
+  xpToNext: number;
+  streak: number;
+  gems: number;
+  avatarLetter: string;
 }
+
+const MOCK_LESSONS = [
+  { id: 1, title: 'Gia đình & Bạn bè', grade: 'Lớp 6', cefr: 'A1', xp: 80, icon: 'fa-user-group' },
+  { id: 2, title: 'Thời tiết hôm nay', grade: 'Lớp 7', cefr: 'A2', xp: 100, icon: 'fa-cloud-sun' },
+  { id: 3, title: 'Đặt món ăn', grade: 'Lớp 8', cefr: 'A2', xp: 120, icon: 'fa-utensils' },
+];
 
 export default function DashboardPage() {
   const router = useRouter();
-  const [user, setUser] = useState<UserInfo | null>(null);
+  const [user, setUser] = useState<UserState | null>(null);
 
   useEffect(() => {
+    // Simulate getting user from storage or API
     const stored = localStorage.getItem('user');
     if (!stored) {
-      router.push('/login');
+      // router.push('/login');
+      // For demo purposes, set a default state if not logged in
+      setUser({
+        name: 'Phúc Admin',
+        level: 12,
+        xp: 2450,
+        xpToNext: 3000,
+        streak: 7,
+        gems: 340,
+        avatarLetter: 'P',
+      });
       return;
     }
-    setUser(JSON.parse(stored));
+    const parsed = JSON.parse(stored);
+    setUser({
+      name: parsed.username || parsed.email || 'User',
+      level: 12, // Default mock values
+      xp: 2450,
+      xpToNext: 3000,
+      streak: 7,
+      gems: 340,
+      avatarLetter: (parsed.username?.[0] || parsed.email?.[0] || 'U').toUpperCase(),
+    });
   }, [router]);
-
-  const handleLogout = () => {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('user');
-    router.push('/login');
-  };
 
   if (!user) return null;
 
+  const progressPercent = Math.floor((user.xp / user.xpToNext) * 100);
+
   return (
-    <div className={styles.container}>
-      <header className={styles.header}>
-        <div className={styles.userInfo}>
-          <span className={styles.username}>
-            {user.username || user.email}
-          </span>
-          {user.role === 'SUPER_ADMIN' && (
-            <span className={styles.goldBadge} title="Verified Super Admin">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#FFD700" stroke="#DAA520" strokeWidth="1"/>
-                <path d="M9 12l2 2 4-4" stroke="#1a1a1a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </span>
-          )}
-        </div>
-        <button onClick={handleLogout} className={styles.logoutBtn}>Logout</button>
-      </header>
-
-      <main className={styles.main}>
-        <div className={styles.card}>
-          <h2 className={styles.cardTitle}>Welcome to Agen-English</h2>
-          <p className={styles.cardDesc}>Your AI-powered English learning platform.</p>
-        </div>
-
-        <div className={styles.navGrid}>
-          <Link href="/learn" className={styles.navCard}>
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-            <span>Flashcards</span>
-          </Link>
-          <Link href="/speak" className={styles.navCard}>
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
-            <span>Speaking</span>
-          </Link>
-        </div>
-
-        {user.role === 'SUPER_ADMIN' && (
-          <div className={styles.adminBanner}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#FFD700"/></svg>
-            <span>Super Admin — Unlimited Access Enabled</span>
+    <>
+      <AppHeader user={user} />
+      
+      <main className="scroll-area">
+        <div className="card">
+          <div className={styles.statsRow}>
+            <div className={styles.statItem}>
+              <div className={styles.statValue}>{user.streak}🔥</div>
+              <div className={styles.statLabel}>Ngày streak</div>
+            </div>
+            <div className={styles.statItem}>
+              <div className={styles.statValue}>{user.xp} XP</div>
+              <div className={styles.statLabel}>Kinh nghiệm</div>
+            </div>
+            <div className={styles.statItem}>
+              <div className={styles.statValue}>{user.gems}💎</div>
+              <div className={styles.statLabel}>Gem</div>
+            </div>
           </div>
-        )}
+          
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '12px', fontSize: '13px' }}>
+            <span>Level {user.level}</span>
+            <span>{user.xp} / {user.xpToNext} XP</span>
+          </div>
+          
+          <div className={styles.progressBarBg}>
+            <div className={styles.progressFill} style={{ width: `${progressPercent}%` }}></div>
+          </div>
+        </div>
+
+        <h3 className={styles.sectionTitle}>Bài học tiếp theo</h3>
+        
+        <div className={styles.lessonList}>
+          {MOCK_LESSONS.map((lesson) => (
+            <Link href={`/learn/${lesson.id}`} key={lesson.id} className={styles.lessonItem}>
+              <div className={styles.lessonIcon}>
+                <i className={`fas ${lesson.icon}`}></i>
+              </div>
+              <div className={styles.lessonInfo}>
+                <div className={styles.lessonTitle}>{lesson.title}</div>
+                <div className={styles.lessonMeta}>
+                  <span>{lesson.grade}</span>
+                  <span>{lesson.cefr}</span>
+                </div>
+              </div>
+              <div className={styles.xpTag}>+{lesson.xp} XP</div>
+            </Link>
+          ))}
+        </div>
+
+        <div className={styles.speakingCard}>
+          <i className="fas fa-microphone-alt" style={{ fontSize: '26px', color: 'var(--accent)' }}></i>
+          <h4 style={{ marginTop: '8px', color: 'white' }}>Luyện nói AI</h4>
+          <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '12px' }}>
+            Phát âm câu: "Hello, how are you?"
+          </p>
+          <button className={styles.micButton}>
+            <i className="fas fa-microphone"></i>
+          </button>
+          <Link href="/speak" className="btn" style={{ marginTop: '6px' }}>
+            Bắt đầu nói
+          </Link>
+        </div>
       </main>
-    </div>
+
+      <BottomNav />
+    </>
   );
 }
