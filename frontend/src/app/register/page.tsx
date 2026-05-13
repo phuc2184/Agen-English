@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState } from 'react';
-import { AuthCard } from '@/components/AuthCard';
-import { BaseInput } from '@/components/BaseInput';
-import { BaseButton } from '@/components/BaseButton';
+import { AuthCard } from '@/components/common/AuthCard';
+import { BaseInput } from '@/components/common/BaseInput';
+import { BaseButton } from '@/components/common/BaseButton';
 import styles from './page.module.css';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';

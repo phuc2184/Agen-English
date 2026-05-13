@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { AppHeader } from '@/components/AppHeader';
-import { BottomNav } from '@/components/BottomNav';
+import { AppHeader } from '@/components/layout/AppHeader';
+import { BottomNav } from '@/components/layout/BottomNav';
 
 interface UserState {
   name: string;

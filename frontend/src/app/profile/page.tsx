@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { AppHeader } from '@/components/AppHeader';
-import { BottomNav } from '@/components/BottomNav';
+import { AppHeader } from '@/components/layout/AppHeader';
+import { BottomNav } from '@/components/layout/BottomNav';
 
 export default function ProfilePage() {
   const router = useRouter();

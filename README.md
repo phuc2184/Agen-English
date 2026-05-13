@@ -1,66 +1,70 @@
 # Agen-English: AI-Powered Language Learning Platform
-**Last updated: May 2026**
 
-Agen-English is a state-of-the-art language learning system designed with the **Green-Tick Design Standard**. It features Spaced Repetition (SM-2), Speech AI for pronunciation scoring, and a gamified experience with XP and Leaderboards.
+Agen-English is a modern, gamified English learning platform that leverages AI for pronunciation assessment, spaced repetition for vocabulary mastery, and a premium mobile-first user experience.
 
 ## 🚀 Features
 
-- **Spaced Repetition (SM-2)**: Optimized vocabulary review cycles.
-- **Speech AI Scoring**: Accurate pronunciation and fluency assessment using Levenshtein distance.
-- **Phoneme-level Feedback**: Deep analysis of speech patterns (Azure Speech integration).
-- **Gamification**: XP system, levels, streaks, and global leaderboards.
-- **Multimedia Lessons**: High-fidelity video and audio player for immersive learning.
-- **RBAC**: Secure role-based access control with Super Admin privileges.
+- **AI Pronunciation Feedback**: Real-time scoring of pronunciation and fluency using Azure Speech SDK and custom scoring algorithms.
+- **Spaced Repetition System (SRS)**: Optimized learning using the SM-2 algorithm to ensure long-term retention of vocabulary.
+- **Gamified Experience**: Earn XP, maintain streaks, and climb the leaderboard as you learn.
+- **Multimedia Lessons**: Interactive lessons with integrated audio and visual aids.
+- **Premium Design**: A "Mint-Dark" aesthetic with a consistent 24px corner radius for a modern look and feel.
 
 ## 🛠 Tech Stack
 
-- **Frontend**: Next.js 14, CSS Modules, Lucide Icons.
-- **Backend**: NestJS, Prisma ORM, JWT Authentication.
-- **Database**: PostgreSQL.
-- **DevOps**: Docker, Docker Compose.
+### Frontend
+- **Framework**: Next.js 15 (App Router)
+- **Language**: TypeScript
+- **Styling**: Vanilla CSS (CSS Modules)
+- **Icons**: FontAwesome
 
-## 🏗 Architecture
+### Backend
+- **Framework**: NestJS
+- **Language**: TypeScript
+- **Database**: PostgreSQL with Prisma ORM
+- **Authentication**: JWT-based auth
+- **AI Services**: Azure Speech SDK, OpenAI API
 
-```mermaid
-graph TD
-    A[Frontend: Next.js] -->|REST API| B[Backend: NestJS]
-    B -->|Prisma ORM| C[(PostgreSQL)]
-    B -->|API Calls| D[Azure Speech AI]
-    B -->|API Calls| E[OpenAI TTS]
-    B -->|Caching| F[Redis - Optional]
-```
+## 📦 Project Structure
 
-## ⚙️ Setup Guide
+### Backend
+- `src/modules`: Feature-specific modules (Auth, Lesson, Vocab, etc.)
+- `src/common`: Shared services (Prisma, SM-2 logic) and utilities.
+- `src/config`: Centralized environment configuration.
+
+### Frontend
+- `src/app`: Next.js pages and layouts.
+- `src/components/common`: Atomic UI components (Buttons, Inputs).
+- `src/components/layout`: Global layout components (Header, Nav).
+- `src/components/features`: Feature-specific UI components.
+- `src/services`: API integration layers.
+
+## 🛠 Local Setup
 
 ### Prerequisites
-- Node.js v20+
+- Node.js 20+
 - Docker & Docker Compose
+- Azure Speech SDK Key (optional for AI features)
+- OpenAI API Key (optional for AI features)
 
-### 1. Clone & Environment
-```bash
-git clone https://github.com/phuc2184/Agen-English.git
-cd Agen-English
-```
-Create a `.env` file in the `backend` directory based on the provided configuration.
+### Backend Setup
+1. Navigate to the `backend` folder.
+2. Create a `.env` file from `.env.example`.
+3. Run `npm install`.
+4. Start the database using `docker-compose up -d` (if using local docker) or ensure your `DATABASE_URL` is correct.
+5. Run `npx prisma migrate dev` to initialize the database.
+6. Start the server: `npm run dev`.
 
-### 2. Launch with Docker
-```bash
-docker-compose up --build -d
-```
+### Frontend Setup
+1. Navigate to the `frontend` folder.
+2. Create a `.env` file from `.env.example`.
+3. Run `npm install`.
+4. Start the development server: `npm run dev`.
 
-### 3. Database Sync
-```bash
-cd backend
-npx prisma migrate dev
-npx prisma db seed
-```
+## 🚢 Deployment
 
-## 🛡 Security & Admin
-- **Default Admin**: `dangphuc99`
-- **Role**: `SUPER_ADMIN`
-- **Features**: Unlimited AI access, Gold Badge visuals, Detailed Speech Debugging.
+- **Frontend**: Optimized for Vercel (see `vercel.json`).
+- **Backend**: Dockerized for production (see `Dockerfile`).
 
-## 📝 License
-MIT License. Created by dangphuc99.
-
-
+---
+Developed by **Antigravity** for **Agen-English**.

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '../../common/prisma/prisma.service';
 import { GamificationService } from '../gamification/gamification.service';
 
 /** Levenshtein distance between two strings */

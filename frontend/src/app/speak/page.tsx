@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styles from './page.module.css';
 import { scorePronunciation, type ScoringResult, type WordResult } from '@/lib/scoring-engine';
-import { AppHeader } from '@/components/AppHeader';
+import { AppHeader } from '@/components/layout/AppHeader';
 import { useRouter } from 'next/navigation';
 
 export default function SpeakPage() {

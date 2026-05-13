@@ -2,11 +2,11 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AuthModule } from './auth/auth.module';
-import { SpeechModule } from './speech/speech.module';
-import { GamificationModule } from './gamification/gamification.module';
-import { LessonModule } from './lesson/lesson.module';
-import { VocabModule } from './vocab/vocab.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { SpeechModule } from './modules/speech/speech.module';
+import { GamificationModule } from './modules/gamification/gamification.module';
+import { LessonModule } from './modules/lesson/lesson.module';
+import { VocabModule } from './modules/vocab/vocab.module';
 
 @Module({
   imports: [

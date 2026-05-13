@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import styles from './page.module.css';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { AppHeader } from '@/components/AppHeader';
+import { AppHeader } from '@/components/layout/AppHeader';
 import { API_URL } from '@/lib/constants';
 
 export default function LoginPage() {
